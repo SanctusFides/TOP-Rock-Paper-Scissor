@@ -5,6 +5,7 @@ body {
     font-family: sans-serif;
     justify-content: center;
     align-items: center;
+    font-size: 40px;
 }
 
 .container {
@@ -12,7 +13,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-top: 20%;
+    padding-top: 10%;
     gap: 50px;
 }
 
