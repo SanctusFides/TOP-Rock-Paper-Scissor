@@ -17,31 +17,25 @@ function getComputerChoice() {
     return npcChoice;
 }
 
-function getPlayerChoice() {
-    let playerChoice = prompt("Rock, Paper, or Scissors?").toLowerCase();
-    return playerChoice;
-}
 
 function playRound(playerSelection, computerSelection) {
 
-    if (playerSelection === "rock" && computerSelection === "Paper") {
+    if (playerSelection === "Rock" && computerSelection === "Paper") {
         return("You Lose! Paper beats Rock!");
     }
-    if (playerSelection === "rock" && computerSelection === "Scissors") {
+    if (playerSelection === "Rock" && computerSelection === "Scissors") {
         return("You Win! Rock beats Scissors!");
     }
-
-    if (playerSelection === "paper" && computerSelection === "Scissors") {
+    if (playerSelection === "Paper" && computerSelection === "Scissors") {
         return("You Lose! Scissors beats Paper!");
     }
-    if (playerSelection === "paper" && computerSelection === "Rock") {
+    if (playerSelection === "Paper" && computerSelection === "Rock") {
         return("You Win! Paper beats Rock!");
     }
-
-    if (playerSelection === "scissors" && computerSelection === "Rock") {
+    if (playerSelection === "Scissors" && computerSelection === "Rock") {
         return("You Lose! Rock beats Scissors!");
     }
-    if (playerSelection === "scissors" && computerSelection === "Paper") {
+    if (playerSelection === "Scissors" && computerSelection === "Paper") {
         return("You Win! Scissors beats Paper!");
     } 
     else {
@@ -50,11 +44,100 @@ function playRound(playerSelection, computerSelection) {
 }
 
 function game() {
-    for (let index = 0; index < 5; index++) {
-        let playerSelection = getPlayerChoice();
-        let computerSelection = getComputerChoice();
-        console.log(playRound(playerSelection, computerSelection));   
+
+    //Keeps track of player score
+    const score = document.getElementById("score");
+    let myWins = 0;
+    score.innerHTML = myWins;
+    
+    //Keeps track of player score
+    const npcScore = document.getElementById("npcscore");
+    let npcWins = 0;
+    npcScore.innerHTML = npcWins;
+
+    //For displaying the result of each round
+    let results = document.querySelector('#results');
+    results.textContent = "Good Luck!"
+
+    // checks to see if either player has reached 5 points for victory
+    function winCheck() {
+        if (myWins === 5) {
+            alert(results.textContent = 'Congrats, you win!');
+        } else if (npcWins === 5) {
+            alert(results.textContent = 'You lose! Better luck next time!');
+        } else {
+            return;
+        }
     }
+    
+
+    // Logic block for Paper button
+    const rockButton = document.querySelector("#rock");
+    rockButton.addEventListener('click', () => {
+        let npcChoice = getComputerChoice();
+        let matchResult = playRound("Rock", npcChoice);
+        results.textContent = matchResult;
+        if (matchResult.startsWith('You Win!')) {
+            myWins++;
+            score.innerHTML = myWins;
+            winCheck()
+        } else if (matchResult.startsWith('You Lose!')) {
+            npcWins++;
+            npcScore.innerHTML = npcWins;
+            winCheck()
+        } else {
+            return;
+        }
+    })
+
+    // Logic block for Paper button
+    const paperButton = document.querySelector("#paper");
+    paperButton.addEventListener('click', () => {
+        let npcChoice = getComputerChoice();
+        let matchResult = playRound("Paper", npcChoice);
+        results.textContent = matchResult;        
+        if (matchResult.startsWith('You Win!')) {
+            myWins++;
+            score.innerHTML = myWins;
+            winCheck()
+        } else if (matchResult.startsWith('You Lose!')) {
+            npcWins++;
+            npcScore.innerHTML = npcWins;
+            winCheck()
+        } else {
+            return;
+        }
+    })
+
+    // Logic block for Scissors button
+    const scissorsButton = document.querySelector("#scissors");
+    scissorsButton.addEventListener('click', () => {
+        let npcChoice = getComputerChoice();
+        let matchResult = playRound("Scissors", npcChoice);
+        results.textContent = matchResult;
+        if (matchResult.startsWith('You Win!')) {
+            myWins++;
+            score.innerHTML = myWins;
+            winCheck()
+        } else if (matchResult.startsWith('You Lose!')) {
+            npcWins++;
+            npcScore.innerHTML = npcWins;
+            winCheck()
+        } else {
+            return;
+        }
+    })
+
+    // Logic block to reset the scores and the text in the result box
+    const resetButton = document.querySelector('#reset');
+    resetButton.addEventListener('click', () => {
+        myWins = 0;
+        npcWins = 0;
+        score.innerHTML = myWins;
+        npcScore.innerHTML = npcWins;
+        results.textContent = "";
+
+    })
 }
 
 console.log(game());
